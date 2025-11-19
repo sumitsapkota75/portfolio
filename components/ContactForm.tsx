@@ -4,13 +4,45 @@
 import { FormEvent, useState } from "react";
 import SectionContainer from "./SectionContainer";
 
-export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+type Status = "idle" | "loading" | "sent" | "error";
 
-  const handleSubmit = (e: FormEvent) => {
+export default function ContactForm() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState<string | null>(null);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: integrate with API route / email service
-    setStatus("sent");
+    setStatus("loading");
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Failed to send message");
+      }
+
+      setStatus("sent");
+      setName("");
+      setEmail("");
+      setMessage("");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Something went wrong. Please try again.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -28,6 +60,8 @@ export default function ContactForm() {
             <input
               required
               type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
               placeholder="Your name"
             />
@@ -39,6 +73,8 @@ export default function ContactForm() {
             <input
               required
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
               placeholder="you@example.com"
             />
@@ -50,20 +86,30 @@ export default function ContactForm() {
             <textarea
               required
               rows={4}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
               placeholder="Tell me about the role, project or idea..."
             />
           </div>
           <button
             type="submit"
-            className="inline-flex items-center rounded-full bg-emerald-500/90 px-5 py-2 text-xs font-semibold text-neutral-950 hover:bg-emerald-400 transition"
+            disabled={status === "loading"}
+            className="inline-flex items-center rounded-full bg-emerald-500/90 px-5 py-2 text-xs font-semibold text-neutral-950 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
-            {status === "sent" ? "Message sent ✔" : "Send message"}
+            {status === "loading"
+              ? "Sending..."
+              : status === "sent"
+              ? "Message sent ✔"
+              : "Send message"}
           </button>
           {status === "sent" && (
-            <p className="text-[11px] text-emerald-300 mt-1">
+            <p className="mt-1 text-[11px] text-emerald-300">
               Thanks for reaching out! I&apos;ll get back to you soon.
             </p>
+          )}
+          {status === "error" && error && (
+            <p className="mt-1 text-[11px] text-red-400">{error}</p>
           )}
         </form>
 

@@ -16,20 +16,20 @@ export default function SectionContainer({
   children,
 }: SectionContainerProps) {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-16 md:py-24">
       <motion.div
-        className="mx-auto max-w-4xl px-4"
+        className="mx-auto max-w-6xl px-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         {eyebrow && (
-          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300/70">
+          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]/80">
             {eyebrow}
           </p>
         )}
-        <h2 className="mb-8 text-3xl md:text-4xl font-semibold tracking-tight text-neutral-50">
+        <h2 className="mb-10 max-w-3xl text-3xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl md:leading-tight">
           {title}
         </h2>
         {children}

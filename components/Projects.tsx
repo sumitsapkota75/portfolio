@@ -1,81 +1,71 @@
 // components/Projects.tsx
 import SectionContainer from "./SectionContainer";
-
-const projects = [
-  {
-    name: "Go-Gin Skeleton",
-    tagline: "Production-ready Go backend starter",
-    description:
-      "An opinionated skeleton using Gin to standardize auth, validation, logging and service structure so teams can ship Go microservices faster.",
-    tech: ["Golang", "Gin", "PostgreSQL", "JWT", "Docker"],
-    link: "https://github.com/readytowork-org/go-gin-skeleton",
-  },
-  {
-    name: "DigiSign",
-    tagline: "Digital document signing platform",
-    description:
-      "A multi-tenant document signing platform where multiple users can sign in a specific sequence defined by the document owner.",
-    tech: ["React", "Golang / Node.js", "Microservices", "Stripe"],
-    link: "",
-  },
-  {
-    name: "BeHealth",
-    tagline: "Healthcare platform for elderly care",
-    description:
-      "Platform supporting government-backed free healthcare for elderly citizens, including patient profiles, visits and reporting.",
-    tech: ["React", "Django REST", "PostgreSQL", "GCP"],
-    link: "",
-  },
-  {
-    name: "HrTech",
-    tagline: "Employee lifecycle automation",
-    description:
-      "HR platform to automate onboarding, attendance, payroll and HR analytics across the employee lifecycle.",
-    tech: ["React", "Django REST", "PostgreSQL"],
-    link: "",
-  },
-];
+import { projects } from "@/data/portfolio";
 
 export default function Projects() {
   return (
-    <SectionContainer title="Projects" eyebrow="What I've built">
-      <div className="grid gap-5 md:grid-cols-2">
+    <SectionContainer title="Selected Work" eyebrow="Case Studies">
+      <div className="space-y-5">
         {projects.map((project) => (
           <article
             key={project.name}
-            className="group flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/70 p-5 shadow-sm shadow-black/70 transition hover:-translate-y-0.5 hover:border-emerald-500/40"
+            className="rounded-[1.75rem] border border-[var(--border-soft)] bg-[var(--bg-panel)] p-6 shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
           >
-            <div className="mb-3 flex items-start justify-between gap-3">
+            <div className="grid gap-6 lg:grid-cols-[0.8fr,1.2fr]">
               <div>
-                <h3 className="text-sm font-semibold text-neutral-50 group-hover:text-emerald-300/90">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]/80">
+                  {project.role}
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                   {project.name}
                 </h3>
-                <p className="text-xs text-neutral-400">{project.tagline}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] px-3 py-1 text-[11px] text-[var(--text-secondary)]"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                    Problem
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-[var(--text-secondary)]">
+                    {project.problem}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                    Solution
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-[var(--text-secondary)]">
+                    {project.solution}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                    Impact
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-[var(--text-secondary)]">
+                    {project.impact}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+                    Ownership
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-[var(--text-secondary)]">
+                    {project.ownership}
+                  </p>
+                </div>
               </div>
             </div>
-            <p className="mb-4 text-xs text-neutral-300">
-              {project.description}
-            </p>
-            <div className="mb-3 flex flex-wrap gap-1.5">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-neutral-700 bg-neutral-950 px-2 py-0.5 text-[10px] text-neutral-300"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            {project.link && (
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-auto text-[11px] text-emerald-300/90 hover:text-emerald-200"
-              >
-                View project →
-              </a>
-            )}
           </article>
         ))}
       </div>

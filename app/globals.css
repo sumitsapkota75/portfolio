@@ -1,9 +1,50 @@
 @import "tailwindcss";
 
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+:root {
+  --bg-primary: #0a1220;
+  --bg-secondary: #0f1b2d;
+  --bg-elevated: #13233a;
+  --bg-panel: #15243a;
+  --bg-panel-strong: #0d1828;
+  --border-soft: rgba(119, 145, 180, 0.22);
+  --border-strong: rgba(77, 197, 167, 0.38);
+  --text-primary: #edf3fb;
+  --text-secondary: #c9d6e8;
+  --text-muted: #90a3bf;
+  --accent: #4dc5a7;
+  --accent-strong: #2f9e87;
+  --accent-warm: #c98b2b;
+}
+
+html {
+  background: linear-gradient(180deg, #0a1220 0%, #09111d 100%);
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text-primary);
+  font-family:
+    "Segoe UI Variable Text",
+    "Segoe UI",
+    "SF Pro Text",
+    "Inter",
+    sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(77, 197, 167, 0.08), transparent 24%),
+    linear-gradient(180deg, #0a1220 0%, #0a1422 32%, #0b1626 100%);
+  font-feature-settings: "ss01" on, "cv01" on, "cv11" on;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.03em;
+}
 
 ::selection {
-  background-color: rgba(52, 211, 153, 0.35); /* emerald-ish */
+  background-color: rgba(95, 227, 190, 0.35);
 }

@@ -3,168 +3,121 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { hero, profile } from "@/data/portfolio";
 
 export default function Hero() {
-  const cardRef = useRef<HTMLDivElement | null>(null);
-
-  // Scroll-based glow for the photo card (desktop)
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.2, 0.6, 0.15]);
-  const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
-
-  // Mouse-driven 3D parallax (desktop)
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-
-  const springRotateX = useSpring(rotateX, { stiffness: 150, damping: 20 });
-  const springRotateY = useSpring(rotateY, { stiffness: 150, damping: 20 });
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-
-    const rect = el.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    const midX = rect.width / 2;
-    const midY = rect.height / 2;
-
-    const percentX = (x - midX) / midX;
-    const percentY = (y - midY) / midY;
-
-    const maxRotate = 10;
-
-    rotateY.set(percentX * maxRotate);
-    rotateX.set(-percentY * maxRotate);
-  };
-
-  const handlePointerLeave = () => {
-    rotateX.set(0);
-    rotateY.set(0);
-  };
-
   return (
-    <div className="relative border-b border-neutral-900 bg-gradient-to-b from-neutral-950 via-neutral-950 to-neutral-900">
+    <div className="relative overflow-hidden border-b border-[var(--border-soft)] bg-[linear-gradient(180deg,#0a1220_0%,#0b1524_55%,#0d1828_100%)]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(77,197,167,0.08),transparent_26%),radial-gradient(circle_at_80%_20%,rgba(77,197,167,0.05),transparent_20%)]" />
       <motion.div
-        className="mx-auto flex max-w-4xl flex-col items-center gap-10 px-4 py-12 md:flex-row md:items-center md:justify-between md:py-24"
+        className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-[minmax(0,1fr),190px] md:items-start md:py-24 lg:grid-cols-[minmax(0,1fr),210px]"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        {/* Left – text block */}
         <motion.div
-          className="relative w-full md:flex-1"
+          className="relative md:pr-4"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
         >
-          {/* Blurred gradient behind text for readability */}
-          <div className="pointer-events-none absolute -inset-x-6 -inset-y-6 -z-10 bg-gradient-to-b from-emerald-500/10 via-neutral-950/90 to-transparent blur-2xl" />
-
-          <p className="mb-3 text-[13px] md:text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300/80">
-            Full-Stack Software Engineer
+          <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]/80 md:text-sm">
+            {hero.eyebrow}
           </p>
 
-          <h1 className="mb-4 text-4xl leading-tight md:text-5xl md:leading-tight font-semibold tracking-tight text-neutral-50">
-            I build reliable{" "}
-            <span className="text-emerald-300/90">backend systems</span> and
-            smooth{" "}
-            <span className="text-emerald-300/90">frontend experiences</span>.
+          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-6xl md:leading-[1.05]">
+            {hero.headline}
           </h1>
 
-          <p className="mb-6 max-w-xl text-[15px] md:text-base text-neutral-300">
-            I&apos;m Sumit, a full-stack engineer with over 5 years of
-            experience building cloud-native products using Golang, Python,
-            Node.js, React, and Next.js. I focus on clean architecture, readable
-            code, and shipping real, production-ready software.
+          <p className="mt-6 max-w-3xl text-base leading-8 text-[var(--text-secondary)] md:text-lg">
+            {hero.summary}
           </p>
 
-          <div className="mb-6 flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              href="#projects"
-              className="rounded-full bg-emerald-500/90 px-6 py-2.5 text-xs md:text-sm font-semibold text-neutral-950 shadow-md shadow-emerald-500/30 hover:bg-emerald-400 transition"
+              href={hero.primaryCta.href}
+              className="rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#08111f] transition hover:bg-[#68d2bb]"
             >
-              See my work
+              {hero.primaryCta.label}
             </Link>
             <Link
-              href="#contact"
-              className="text-xs md:text-sm text-neutral-300 hover:text-emerald-300/90"
+              href={hero.secondaryCta.href}
+              className="rounded-full border border-[var(--border-soft)] bg-[var(--bg-panel)] px-6 py-3 text-sm font-medium text-[var(--text-primary)] transition hover:border-[var(--border-strong)] hover:bg-[var(--bg-elevated)]"
             >
-              Contact me →
+              {hero.secondaryCta.label}
             </Link>
+            <a
+              href={profile.resume}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-medium text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]"
+            >
+              Resume
+            </a>
           </div>
-
-          <div className="flex flex-wrap gap-3 text-[12px] md:text-[13px] text-neutral-400">
-            <span className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-              Open to full-stack & backend roles
-            </span>
-            <span>Golang · Python · React · Next.js · GCP · AWS</span>
-          </div>
-
-          {/* Scroll-down indicator – mobile only, just below content */}
-          <a
-            href="#skills"
-            className="mt-8 flex flex-col items-center gap-1 text-[11px] text-neutral-500 md:hidden"
-          >
-            <span>Scroll down</span>
-            <span className="h-6 w-px overflow-hidden rounded-full bg-neutral-700">
-              <span className="block h-full w-full animate-bounce bg-emerald-400" />
-            </span>
-          </a>
         </motion.div>
 
-        {/* Right – desktop-only 3D parallax photo */}
-        <div className="hidden md:flex md:flex-1 md:justify-end">
+        <div className="hidden md:flex md:justify-end">
           <motion.div
-            ref={cardRef}
-            className="relative w-80 aspect-[3/4]"
+            className="mt-2 w-[180px] lg:w-[200px]"
             initial={{ opacity: 0, scale: 0.92, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
           >
-            {/* Scroll-synced glow */}
-            <motion.div
-              style={{ opacity: glowOpacity, scale: glowScale }}
-              className="pointer-events-none absolute inset-0 rounded-[1.75rem] bg-gradient-to-tr from-emerald-500/30 via-teal-500/25 to-sky-500/20 blur-2xl"
-            />
-
-            {/* Mouse-driven 3D card */}
-            <motion.div
-              className="relative h-full w-full overflow-hidden rounded-[1.75rem] border border-neutral-700 bg-neutral-900/90 shadow-xl shadow-black/60"
-              style={{
-                transformStyle: "preserve-3d",
-                rotateX: springRotateX,
-                rotateY: springRotateY,
-              }}
-              onPointerMove={handlePointerMove}
-              onPointerLeave={handlePointerLeave}
-            >
-              <Image
-                src="/sumit.jpg"
-                alt="Sumit Sapkota"
-                fill
-                priority
-                sizes="320px"
-                className="object-cover object-center"
-              />
-              {/* subtle inner border highlight */}
-              <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] border border-emerald-300/10" />
-            </motion.div>
+            <div className="rounded-[1.5rem] border border-[var(--border-soft)] bg-[var(--bg-panel)] p-3 shadow-[0_18px_40px_rgba(0,0,0,0.22)]">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-[1.15rem] border border-[var(--border-soft)] bg-[var(--bg-panel-strong)]">
+                <Image
+                  src="/sumit.jpg"
+                  alt={profile.name}
+                  fill
+                  priority
+                  sizes="200px"
+                  className="object-cover object-center"
+                />
+              </div>
+              <div className="px-1 pb-1 pt-3">
+                <p className="text-sm font-semibold text-[var(--text-primary)]">
+                  {profile.name}
+                </p>
+                <p className="mt-1 text-[12px] text-[var(--text-muted)]">
+                  {profile.title}
+                </p>
+              </div>
+            </div>
           </motion.div>
+        </div>
+
+        <div className="md:col-span-2">
+          <div className="mt-2 grid gap-3 lg:grid-cols-3">
+            {hero.highlights.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-[1.5rem] border border-[var(--border-soft)] bg-[var(--bg-panel)] px-5 py-4 shadow-[0_12px_24px_rgba(0,0,0,0.18)]"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]/75">
+                  {item.label}
+                </p>
+                <p className="mt-2 text-sm font-medium leading-6 text-[var(--text-primary)]">
+                  {item.value}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 rounded-[1.75rem] border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] p-5">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]/80">
+              Core Technologies
+            </p>
+            <ul className="mt-4 grid gap-3 text-sm text-[var(--text-secondary)] md:grid-cols-3">
+              {hero.trustPoints.map((point) => (
+                <li key={point} className="flex gap-3">
+                  <span className="mt-1.5 h-2 w-2 rounded-full bg-[var(--accent)]" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </motion.div>
     </div>

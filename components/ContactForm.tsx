@@ -3,6 +3,7 @@
 
 import { FormEvent, useState } from "react";
 import SectionContainer from "./SectionContainer";
+import { profile } from "@/data/portfolio";
 
 type Status = "idle" | "loading" | "sent" | "error";
 
@@ -46,13 +47,81 @@ export default function ContactForm() {
   };
 
   return (
-    <SectionContainer title="Contact & Resume" eyebrow="Let's talk">
-      <div className="grid gap-7 md:grid-cols-[1.4fr,1fr]">
+    <SectionContainer title="Contact" eyebrow="Availability">
+      <div className="grid gap-7 lg:grid-cols-[0.9fr,1.1fr]">
+        <div className="space-y-6 rounded-[1.75rem] border border-[var(--border-soft)] bg-[var(--bg-panel)] p-6 shadow-[0_18px_40px_rgba(0,0,0,0.18)]">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]/80">
+              Current Positioning
+            </p>
+            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+              Senior full-stack engineer with backend depth.
+            </h3>
+            <p className="mt-4 text-sm leading-7 text-[var(--text-secondary)]">
+              Open to senior backend and senior full-stack opportunities where architecture, platform reliability, API quality, and cloud-native delivery matter.
+            </p>
+          </div>
+
+          <div className="grid gap-4 text-sm text-[var(--text-secondary)]">
+            <div>
+              <p className="font-semibold text-[var(--text-primary)]">Email</p>
+              <a href={`mailto:${profile.email}`} className="mt-1 inline-block text-[var(--accent)] hover:text-[#68d2bb]">
+                {profile.email}
+              </a>
+            </div>
+            <div>
+              <p className="font-semibold text-[var(--text-primary)]">Phone</p>
+              <a href="tel:+19723384953" className="mt-1 inline-block text-[var(--accent)] hover:text-[#68d2bb]">
+                {profile.phone}
+              </a>
+            </div>
+            <div>
+              <p className="font-semibold text-[var(--text-primary)]">Location</p>
+              <p className="mt-1">{profile.location}</p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={profile.resume}
+              className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-[#08111f] transition hover:bg-[#68d2bb]"
+            >
+              Resume
+            </a>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:border-[var(--border-strong)]"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:border-[var(--border-strong)]"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-2xl border border-neutral-800 bg-neutral-900/70 p-5"
+          className="space-y-4 rounded-[1.75rem] border border-[var(--border-soft)] bg-[var(--bg-panel)] p-6 shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
         >
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--accent)]/80">
+              Reach Out
+            </p>
+            <h3 className="mt-3 text-xl font-semibold text-[var(--text-primary)]">
+              Start a conversation
+            </h3>
+          </div>
           <div>
             <label className="mb-1 block text-xs font-medium text-neutral-100">
               Name
@@ -62,7 +131,7 @@ export default function ContactForm() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+              className="w-full rounded-md border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] px-3 py-2 text-xs text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
               placeholder="Your name"
             />
           </div>
@@ -75,7 +144,7 @@ export default function ContactForm() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+              className="w-full rounded-md border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] px-3 py-2 text-xs text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
               placeholder="you@example.com"
             />
           </div>
@@ -88,14 +157,14 @@ export default function ContactForm() {
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-500 focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+              className="w-full rounded-md border border-[var(--border-soft)] bg-[var(--bg-panel-strong)] px-3 py-2 text-xs text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
               placeholder="Tell me about the role, project or idea..."
             />
           </div>
           <button
             type="submit"
             disabled={status === "loading"}
-            className="inline-flex items-center rounded-full bg-emerald-500/90 px-5 py-2 text-xs font-semibold text-neutral-950 hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed transition"
+            className="inline-flex items-center rounded-full bg-[var(--accent)] px-5 py-2 text-xs font-semibold text-slate-950 transition hover:bg-[#67d4b7] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "loading"
               ? "Sending..."
@@ -112,75 +181,6 @@ export default function ContactForm() {
             <p className="mt-1 text-[11px] text-red-400">{error}</p>
           )}
         </form>
-
-        {/* Contact details & resume */}
-        <div className="space-y-4 rounded-2xl border border-neutral-800 bg-neutral-900/70 p-5 text-xs text-neutral-300">
-          <div>
-            <h3 className="mb-2 text-sm font-semibold text-neutral-50">
-              Direct contact
-            </h3>
-            <p>
-              Email:{" "}
-              <a
-                href="mailto:ersumitsapkota@gmail.com"
-                className="text-emerald-300/90 hover:text-emerald-200"
-              >
-                ersumitsapkota@gmail.com
-              </a>
-            </p>
-            <p>
-              Phone:{" "}
-              <a
-                href="tel:+19132955756"
-                className="text-emerald-300/90 hover:text-emerald-200"
-              >
-                +1 (913) 295-5756
-              </a>
-            </p>
-            <p>Overland Park, Kansas, USA</p>
-          </div>
-
-          <div>
-            <h3 className="mb-2 text-sm font-semibold text-neutral-50">
-              Resume
-            </h3>
-            <p className="mb-2">
-              Prefer a PDF? Download my latest resume here:
-            </p>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="/Sumit_Sapkota_Resume.pdf"
-              className="inline-flex items-center rounded-full border border-emerald-500/40 bg-neutral-950 px-4 py-1.5 text-[11px] font-medium text-emerald-100 hover:bg-emerald-500/10 transition"
-            >
-              Download Resume
-            </a>
-          </div>
-
-          <div>
-            <h3 className="mb-2 text-sm font-semibold text-neutral-50">
-              Socials
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="https://github.com/sumitsapkota75"
-                target="_blank"
-                rel="noreferrer"
-                className="text-emerald-300/90 hover:text-emerald-200"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/sumit-sapkota-636b0319b/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-emerald-300/90 hover:text-emerald-200"
-              >
-                LinkedIn
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </SectionContainer>
   );

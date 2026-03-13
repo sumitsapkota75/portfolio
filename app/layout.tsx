@@ -4,9 +4,21 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: "Sumit Sapkota | Software Engineer",
+  title: "Sumit Sapkota | Senior Java Full Stack Developer",
   description:
-    "Full-stack software engineer portfolio – Golang, Python, React, Next.js, cloud-native systems, and scalable microservices.",
+    "Senior full-stack Java developer with 7+ years of experience delivering Spring Boot microservices, distributed systems, cloud-native platforms, and production-grade React and Angular applications.",
+  keywords: [
+    "Senior Java Developer",
+    "Full Stack Engineer",
+    "Spring Boot",
+    "Microservices",
+    "Kafka",
+    "AWS",
+    "React",
+    "Angular",
+    "Next.js",
+    "Kubernetes",
+  ],
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.png",
@@ -21,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-neutral-950 text-neutral-50 antialiased text-[16px] md:text-[17px] leading-relaxed">
+      <body className="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased text-[16px] leading-relaxed md:text-[17px]">
         {children}
         <Analytics />
       </body>
